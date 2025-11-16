@@ -1,5 +1,5 @@
 # Composer
-
+/vendor/
 composer.lock
 
 # IDE
