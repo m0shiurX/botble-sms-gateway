@@ -3,6 +3,7 @@
 namespace FriendsOfBotble\Sms;
 
 use FriendsOfBotble\Sms\Contracts\Factory;
+use FriendsOfBotble\Sms\Drivers\BulkSmsBd;
 use FriendsOfBotble\Sms\Drivers\Msg91;
 use FriendsOfBotble\Sms\Drivers\Nexmo;
 use FriendsOfBotble\Sms\Drivers\Twilio;
@@ -26,6 +27,11 @@ class SmsManager extends BaseManager implements Factory
         return new Msg91();
     }
 
+    public function createBulkSmsBdDriver(): BulkSmsBd
+    {
+        return new BulkSmsBd();
+    }
+
     public function getDefaultDriver(): string
     {
         return setting('sms_default_driver', 'twilio');
@@ -35,17 +41,18 @@ class SmsManager extends BaseManager implements Factory
     {
         return [
             ...$this->customCreators,
-            'twilio' => fn () => $this->createTwilioDriver(),
-            'nexmo' => fn () => $this->createNexmoDriver(),
-            'msg91' => fn () => $this->createMsg91Driver(),
+            'twilio' => fn() => $this->createTwilioDriver(),
+            'nexmo' => fn() => $this->createNexmoDriver(),
+            'msg91' => fn() => $this->createMsg91Driver(),
+            'bulk_sms_bd' => fn() => $this->createBulkSmsBdDriver(),
         ];
     }
 
     public function getProviders(bool $activated = false): array
     {
         return collect(array_keys($this->getDrivers()))
-            ->mapWithKeys(fn (string $driver) => [$driver => $this->driver($driver)->getName()])
-            ->when($activated, fn (Collection $providers) => $providers->reject(fn (string $name, string $key) => !$this->driver($key)->isEnabled()))
+            ->mapWithKeys(fn(string $driver) => [$driver => $this->driver($driver)->getName()])
+            ->when($activated, fn(Collection $providers) => $providers->reject(fn(string $name, string $key) => !$this->driver($key)->isEnabled()))
             ->all();
     }
 

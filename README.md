@@ -34,6 +34,7 @@ The FOB SMS Gateway plugin supports the following SMS gateways:
 1. [Twilio](https://www.twilio.com/)
 2. [Nexmo](https://www.nexmo.com/)
 3. [MSG91](https://msg91.com/)
+4. [BulkSMSBD](https://bulksmsbd.net/)
 
 You can add more SMS gateways by extending the plugin.
 

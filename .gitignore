@@ -1,0 +1,39 @@
+# Composer
+
+composer.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Node
+/node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build
+/public/js/*.js
+/public/css/*.css
+mix-manifest.json
+
+# Environment
+.env
+.env.backup
+.env.production
+
+# OS
+Thumbs.db
+
+# Testing
+.phpunit.result.cache
+phpunit.xml
+coverage/
+
+# Temporary files
+*.log
+*.tmp
+test_*.php
